@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+env:
+  - FF_BRANCH=latest-beta
+  - FF_BRANCH=mozilla-central # Nightly
+
+before_install:
+  - npm install mozilla-download -g
+
+before_script:
+  - cd $TRAVIS_BUILD_DIR
+  - mozilla-download --branch $FF_BRANCH --product firefox firefox
+  - export FIREFOX_PATH=$TRAVIS_BUILD_DIR/firefox/firefox
+  - ls -las $FIREFOX_PATH
+  - export PATH=$FIREFOX_PATH:$PATH
+  - echo $PATH
+  - export JPM_FIREFOX_BINARY=`which firefox`
+  - echo $JPM_FIREFOX_BINARY
+  - firefox -v
